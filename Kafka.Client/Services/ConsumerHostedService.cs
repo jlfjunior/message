@@ -19,7 +19,8 @@ namespace Kafka.Client.Services
             {
                 GroupId = "Consumer",
                 BootstrapServers = "localhost:9092",
-                AutoOffsetReset = AutoOffsetReset.Earliest
+                AutoOffsetReset = AutoOffsetReset.Earliest,
+                EnableAutoOffsetStore = false
             };
 
             _consumer = new ConsumerBuilder<Null, string>(config: config).Build();
@@ -36,6 +37,10 @@ namespace Kafka.Client.Services
                 var consumeResult = _consumer.Consume(stoppingToken);
 
                 _logger.LogInformation($"Message read Offset: {consumeResult.Offset} - {nameof(ConsumerHostedService)}");
+
+                Thread.Sleep(60000);
+
+                _consumer.StoreOffset(consumeResult);
             }
 
             _consumer.Close();

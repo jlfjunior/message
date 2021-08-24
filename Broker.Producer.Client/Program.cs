@@ -1,9 +1,7 @@
 ﻿using Kafka.Client.Extensions;
-using Kafka.Client.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Broker.Client
+namespace Broker.Producer.Client
 {
     class Program
     {
@@ -16,7 +14,7 @@ namespace Broker.Client
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
-                    services.AddKafkaServices();
+                    services.AddKafkaProducersServices();
                 });
     }
 }
